@@ -1,22 +1,18 @@
 <template>
-    <span>
+    <div class="container">
         <div>
             <form name="search" class="form">
                 <input type="text" class="form__input" label="Search..." v-model.trim="searchInput" @input="filterInput" @keydown.enter="filterInput" />
             </form>
         </div>
-        <template v-if="searchInput === '' && !hasResult">
-            <div v-for="(record, index) in records" :key="index">
-                <card :record="record"/>
-            </div>
-        </template>
-
-        <template v-else>
-            <div v-for="(record, index) in filteredRecords" :key="index">
-                <card :record="record" :searchInput="searchInput"/>
-            </div>
-        </template>
-    </span>
+        <div class="container__cards">
+            <RecycleScroller class="scroller" :items="filteredRecords.length ? filteredRecords: records" :item-size="32" key-field="email" itemSize="160"  v-slot="{ item }">
+                <div class="user">
+                    <card :record="item" :searchInput="searchInput" />
+                </div>
+            </RecycleScroller>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -35,7 +31,6 @@ export default {
         return {
             searchInput: '',
             filteredRecords: [],
-            hasResult: false
         }
     },
     methods: {
@@ -43,24 +38,25 @@ export default {
             this.filteredRecords = this.records.filter(record => {
                 return record.name.toLowerCase().includes(this.searchInput.toLowerCase())
             })
-            this.hasResult = true
         },
-        highlightSearch(search) {
-            if (!this.searchInput && !this.searchInput.includes(search)) {
-                return false
-            } else {
-                const regex = new RegExp(this.searchInput, 'gi')
-                let result = search.replace(regex, str => {
-                    return '<span style="background-color:yellow;">' + str + '</span>'
-                })
-                return result
-            }
-        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.container {
+    width: 565px;
+    height: 650px;
+    background: #fff;
+    padding: 13px;
+}
+.container__cards {
+    height: 100%;
+}
+.scroller {
+    height: 100%;
+    overflow-y: hidden;
+}
 .form {
     display: flex;
     align-items: center;
@@ -74,4 +70,6 @@ export default {
     border-radius: 2px;
     background: url('/icon-search.png') no-repeat scroll 7px 7px;
 }
+
+
 </style>

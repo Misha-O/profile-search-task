@@ -1,8 +1,8 @@
 <template>
     <div id="app">
         <section>
-            <div v-if="!showError">
-                <div v-if="records.length" class="container">
+            <div v-if="!showError" class="container">
+                <div v-if="records.length">
                     <search-box :records="records" />
                 </div>
                 <template v-else>
@@ -31,22 +31,15 @@ export default {
             showError: false,
             perPage: 200,
             totalPages: 0,
-            currentPage: 1,
-        }
-    },
-    methods: {
-        onPageChange(page) {
-            console.log(page)
-            this.currentPage = page
+            currentPage: 1
         }
     },
     async created() {
         try {
             const response = await axios.get(this.uri)
             this.totalPages = response.data.length / this.perPage
-            console.log('respose: ', response)
             if (response.status === 200) {
-                return (this.records = response.data.slice(0, 1000))
+                return (this.records = response.data)
             } else {
                 this.showError = true
             }
@@ -79,7 +72,7 @@ section {
     width: 565px;
     height: 650px;
     background: #fff;
-    overflow-y: scroll;
+    padding: 13px;
 }
 
 .alert {
@@ -90,5 +83,20 @@ section {
     border-radius: 5px;
     background-color: #f7a7a3;
     box-shadow: 0 0 15px 5px #ccc;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.16);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 3px 0 0 rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    height: 40px;
 }
 </style>

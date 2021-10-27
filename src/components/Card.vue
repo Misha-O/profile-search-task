@@ -23,6 +23,8 @@
 </template>
 
 <script>
+
+
 export default {
     name: 'card',
     props: {
@@ -55,7 +57,6 @@ export default {
 <style lang="scss" scoped>
 .card {
     display: flex;
-    max-height: 200px;
     margin: 20px;
     background: #fafafa;
     border: 1px solid #4765ff;
