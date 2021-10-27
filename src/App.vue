@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <section>
-            <div v-if="!showError" class="container">
+            <div v-if="!showError">
                 <div v-if="records.length">
                     <search-box :records="records" />
                 </div>
@@ -29,9 +29,6 @@ export default {
             records: [],
             uri: 'https://gist.githubusercontent.com/allaud/093aa499998b7843bb10b44ea6ea02dc/raw/c400744999bf4b308f67807729a6635ced0c8644/users.json',
             showError: false,
-            perPage: 200,
-            totalPages: 0,
-            currentPage: 1
         }
     },
     async created() {
@@ -67,12 +64,6 @@ section {
     justify-content: center;
     align-items: center;
     margin: 90px auto 120px;
-}
-.container {
-    width: 565px;
-    height: 650px;
-    background: #fff;
-    padding: 13px;
 }
 
 .alert {

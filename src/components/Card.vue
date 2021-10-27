@@ -57,7 +57,7 @@ export default {
 <style lang="scss" scoped>
 .card {
     display: flex;
-    margin: 20px;
+    margin-right: 15px;
     background: #fafafa;
     border: 1px solid #4765ff;
     box-sizing: border-box;
@@ -80,7 +80,7 @@ export default {
 }
 .card__info {
     flex: 1;
-    padding: 10px 10px 20px 30px;
+    padding: 10px 10px 10px 30px;
 
     .card__info-header {
         display: flex;
@@ -88,6 +88,8 @@ export default {
         margin-top: 10px;
 
         &--name {
+            word-wrap: break-word;
+            padding: 0 1px;
             margin: 0;
             text-align: left;
             font-size: 24px;
@@ -103,6 +105,7 @@ export default {
 
     .card__info-body {
         text-align: left;
+        line-height: 20px;
         
         &--title {
             margin-top: 5px;
@@ -114,7 +117,7 @@ export default {
         &--address {
             margin-top: 0;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 400;
             color: rgba(0, 0, 0, 0.54);
         }
     }
