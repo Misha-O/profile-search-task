@@ -80,7 +80,7 @@ export default {
     }
     .scroller {
         height: 100%;
-        overflow-y: hidden;
+        overflow-y: auto;
         
         &.dynamic-height {
             height: 65%;
