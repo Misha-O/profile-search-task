@@ -69,6 +69,7 @@ export default {
 .card {
     display: flex;
     margin-right: 15px;
+    margin-bottom: 20px;
     background: #fafafa;
     border: 1px solid #4765ff;
     box-sizing: border-box;
