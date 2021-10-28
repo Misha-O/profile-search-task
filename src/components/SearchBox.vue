@@ -44,7 +44,6 @@ export default {
             this.filteredRecords = this.records.filter(record => {
                 return record.name.toLowerCase().includes(this.searchInput.toLowerCase())
             })
-            console.log(this.filteredRecords.length);
         },
         onCardSelected(record) {
             if (this.selectedRecords.some(selected => selected.email === record.email)) {
@@ -89,7 +88,6 @@ export default {
     }
 }
 .form {
-
     & .form__box {
         display: flex;
         align-items: center;
@@ -117,8 +115,5 @@ export default {
             }
         }
     }
-}
-.test {
-    color: red;
 }
 </style>
