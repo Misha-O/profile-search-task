@@ -6,7 +6,7 @@
                     <search-box :records="records" />
                 </div>
                 <template v-else>
-                    <loading-spinner />
+                    <ui-loading-spinner />
                 </template>
             </div>
             <div v-else class="alert">
@@ -18,12 +18,12 @@
 
 <script>
 import SearchBox from '@/components/SearchBox.vue'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import UiLoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import axios from 'axios'
 
 export default {
     name: 'App',
-    components: { SearchBox, LoadingSpinner },
+    components: { SearchBox, UiLoadingSpinner },
     data() {
         return {
             records: [],

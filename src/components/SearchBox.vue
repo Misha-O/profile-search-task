@@ -3,14 +3,17 @@
         <form class="form">
             <div class="form__box">
                 <i class="fas fa-search"></i>
-                <input type="text" class="form__input" label="Search..." v-model.trim="searchInput" @input="filterInput" @keydown.enter="filterInput" />
+                <input type="text" class="form__input" v-model.trim="searchInput" @input="filterInput" @keydown.enter="filterInput" />
             </div>
         </form>
         <div class="container__cards">
-            <RecycleScroller class="scroller" :items="filteredRecords.length ? filteredRecords : records" :item-size="32" key-field="email" :itemSize="160" v-slot="{ item }">
-                <div class="user">
-                    <card :record="item" :searchInput="searchInput" />
+            <template v-if="selectedRecords.length">
+                <div class="container__cards-selected" v-for="(selected, index) in selectedRecords" :key="index">
+                    <card :record="selected" :searchInput="searchInput" :cardSelected="cardSelected" @cardSelected="onCardSelected($event)"/>
                 </div>
+            </template>
+            <RecycleScroller class="scroller" :items="filteredRecords.length ? filteredRecords : records" key-field="email" :itemSize="170" v-slot="{ item }">
+                <card :record="item" :searchInput="searchInput" @cardSelected="onCardSelected($event)"/>
             </RecycleScroller>
         </div>
     </div>
@@ -31,7 +34,9 @@ export default {
     data() {
         return {
             searchInput: '',
-            filteredRecords: []
+            filteredRecords: [],
+            selectedRecords: [],
+            cardSelected: false
         }
     },
     methods: {
@@ -39,24 +44,42 @@ export default {
             this.filteredRecords = this.records.filter(record => {
                 return record.name.toLowerCase().includes(this.searchInput.toLowerCase())
             })
+        },
+        onCardSelected(record) {
+            if (this.selectedRecords.some(selected => selected.email === record.email)) {
+                this.selectedRecords.splice(this.selectedRecords.indexOf(record), 1)
+                this.cardSelected = false
+            } else {
+                this.selectedRecords.push(record)
+                this.cardSelected = true
+            }
         }
+    },
+    mounted() {
+        this.filteredRecords = []
+        this.selectedRecords = []
     }
+
 }
 </script>
 
 <style lang="scss" scoped>
 .container {
     width: 565px;
-    height: 650px;
+    max-height: 650px;
     background: #fff;
     padding: 13px;
 }
 .container__cards {
     height: 650px;
-}
-.scroller {
-    height: 88%;
-    overflow-y: hidden;
+
+    &-selected {
+        margin-bottom: 20px;
+    }
+    .scroller {
+        height: 88%;
+        overflow-y: hidden;
+    }
 }
 .form__box {
     display: flex;
@@ -77,7 +100,13 @@ export default {
         margin: 20px 30px;
         box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.24);
         border-radius: 2px;
+        border-color: transparent;
+        outline: none;
         background: #fafafa;
+        &:focus {
+            border-color: transparent;
+        }
     }
 }
+
 </style>

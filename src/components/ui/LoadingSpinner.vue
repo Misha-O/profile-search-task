@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'loading-spinner'
+    name: 'ui-loading-spinner'
 }
 </script>
 

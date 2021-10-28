@@ -17,6 +17,13 @@
             <div class="card__info-body">
                 <h6 class="card__info-body--title" v-html="searchInput === '' ? record.title : highlightSearch(record.title)"/>
                 <p class="card__info-body--address" v-html="searchInput === '' ? record.address : highlightSearch(record.address)"/>
+                <hr class="card__info--divider">
+            </div>
+            <div class="card__actions">
+                <button class="card__actions-btn--select" @click="$emit('cardSelected', record)">
+                    <template v-if="!cardSelected">Mark as Suitable</template>
+                    <template v-else>Skip Selection</template>
+                </button>
             </div>
         </div>
     </div>
@@ -37,6 +44,11 @@ export default {
             required: false,
             default: ""
         },
+        cardSelected: {
+            type: [Boolean],
+            required: false,
+            default: false
+        },
     },
     methods: {
         highlightSearch(search) {
@@ -44,12 +56,11 @@ export default {
                 return false
             } else {
                 const regex = new RegExp(this.searchInput, 'gi')
-                let result = search.replace(regex, str => {
+                return search.replace(regex, str => {
                     return '<span style="background-color:yellow;">' + str + '</span>'
                 })
-                return result
             }
-        }
+        },
     }
 }
 </script>
@@ -80,7 +91,7 @@ export default {
 }
 .card__info {
     flex: 1;
-    padding: 10px 10px 10px 30px;
+    padding: 0 10px 10px 30px;
 
     .card__info-header {
         display: flex;
@@ -108,17 +119,39 @@ export default {
         line-height: 20px;
         
         &--title {
-            margin-top: 5px;
-            margin-bottom: 5px;
+            margin: 0;
             font-size: 14px;
             font-weight: 700;
             color: rgba(0, 0, 0, 0.55);
         }
         &--address {
-            margin-top: 0;
+            margin: 0;
             font-size: 14px;
             font-weight: 400;
             color: rgba(0, 0, 0, 0.54);
+        }
+
+        &--divider {
+            border-top: 1px solid rgba(0, 0, 0, 0.12);
+        }
+    }
+
+    .card__actions {
+
+        &-btn--select {
+            display: inline-block;
+            border: none;
+            background-color: inherit;
+            padding: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            color: #009688;
+            font-weight: 500;
+            line-height: 16px;
+            font-size: 14px;
+            &:hover {
+                opacity: 0.8;
+            }
         }
     }
 }
