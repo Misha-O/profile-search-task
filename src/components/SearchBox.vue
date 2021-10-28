@@ -46,13 +46,12 @@ export default {
             })
         },
         onCardSelected(record) {
-            if (this.selectedRecords.some(selected => selected.email === record.email)) {
+            if (this.selectedRecords.find(selected => selected.email === record.email)) {
                 this.selectedRecords.splice(this.selectedRecords.indexOf(record), 1)
-                this.cardSelected = false
             } else {
                 this.selectedRecords.push(record)
-                this.cardSelected = true
             }
+            this.cardSelected = true
         }
     },
     mounted() {
